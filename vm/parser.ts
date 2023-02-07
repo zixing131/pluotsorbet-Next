@@ -1093,11 +1093,12 @@ module J2ME {
      */
     private getClassHierarchy(): ClassInfo [] {
       var classHierarchy = [];
-      var classInfo = this;
-      do {
+      classHierarchy.push(this);
+      var classInfo = this.superClass;
+      while (classInfo){
         classHierarchy.push(classInfo);
         classInfo = classInfo.superClass;
-      } while (classInfo);
+      }
       return classHierarchy;
     }
 
@@ -1268,14 +1269,18 @@ module J2ME {
     }
 
     getMethodByName(utf8Name: Uint8Array, utf8Signature: Uint8Array): MethodInfo {
-      var c = this;
-      do {
+      var i = this.indexOfMethod(utf8Name, utf8Signature);
+      if (i >= 0) {
+        return this.getMethodByIndex(i);
+      }
+      var c = this.superClass
+      while (c){
         var i = c.indexOfMethod(utf8Name, utf8Signature);
         if (i >= 0) {
           return c.getMethodByIndex(i);
         }
         c = c.superClass;
-      } while (c);
+      }
 
       if (this.isInterface) {
         var interfaces = this.getInterfaces();
@@ -1333,15 +1338,13 @@ module J2ME {
     }
 
     getFieldByName(utf8Name: Uint8Array, utf8Signature: Uint8Array, isStatic: boolean): FieldInfo {
-      var c = this;
-      do {
-        var i = c.indexOfField(utf8Name, utf8Signature);
+        var i = this.indexOfField(utf8Name, utf8Signature);
         if (i >= 0) {
-          return c.getFieldByIndex(i);
+          return this.getFieldByIndex(i);
         }
         
         if (isStatic) {
-          var interfaces = c.getAllInterfaces();
+          var interfaces = this.getAllInterfaces();
           for (var n = 0; n < interfaces.length; ++n) {
             var field = interfaces[n].getFieldByName(utf8Name, utf8Signature, isStatic);
             if (field) {
@@ -1350,8 +1353,25 @@ module J2ME {
           }
         }
 
+      var c = this.superClass;
+      while(c){
+        i = c.indexOfField(utf8Name, utf8Signature);
+        if (i >= 0) {
+          return c.getFieldByIndex(i);
+        }
+        
+        if (isStatic) {
+          interfaces = c.getAllInterfaces();
+          for (var n = 0; n < interfaces.length; ++n) {
+            field = interfaces[n].getFieldByName(utf8Name, utf8Signature, isStatic);
+            if (field) {
+              return field;
+            }
+          }
+        }
+
         c = c.superClass;
-      } while (c);
+      }
       return null;
     }
 
@@ -1429,7 +1449,12 @@ module J2ME {
     }
 
     implementsInterface(i: ClassInfo): boolean {
-      var classInfo = this;
+        var interfaces = this.interfaces;
+        for (var n = 0; n < interfaces.length; ++n) {
+          if (interfaces[n] === i)
+            return true;
+        }
+      var classInfo = this.superClass;
       do {
         var interfaces = classInfo.interfaces;
         for (var n = 0; n < interfaces.length; ++n) {
@@ -1484,7 +1509,7 @@ module J2ME {
       super(null);
       this.elementClass = elementClass;
       this.superClass = CLASSES.java_lang_Object;
-      this.superClassName = CLASSES.java_lang_Object.getClassNameSlow();
+      //this.superClassName = CLASSES.java_lang_Object.getClassNameSlow();
     }
 
     isAssignableTo(toClass: ClassInfo): boolean {

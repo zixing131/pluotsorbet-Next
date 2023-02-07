@@ -317,7 +317,8 @@ module J2ME {
                   }
                 }
               }
-              if (result !== YieldReason.None) {
+              //if (result !== YieldReason.None) {
+              if (true) {
                 yieldCounter && yieldCounter.count("Method: " + methodInfo.implKey + " yields because callee: " + callee.implKey + " is not statically bound.");
                 addDependency(callee, methodInfo, YieldReason.Virtual);
               }
