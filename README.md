@@ -9,8 +9,6 @@ j2me in your browser
 * [ ] add softkey support
 * [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
 
-
-
 ## Dependencies
 
 * Spidermonkey (js102 on arch, libmozjs-102-dev on debian)
