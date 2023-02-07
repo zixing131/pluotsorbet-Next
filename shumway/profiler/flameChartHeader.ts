@@ -30,13 +30,13 @@ module Shumway.Tools.Profiler {
     private _name: HTMLDivElement;
 
     constructor(controller: Controller, type: FlameChartHeaderType, name?: string) {
+      super(controller);
       this._type = type;
       var nameDiv = document.createElement("div");
       nameDiv.classList.add("profiler-timeline-name");
       nameDiv.textContent = name;
       this._name = nameDiv;
       controller.container.appendChild(nameDiv);
-      super(controller);
     }
 
     draw() {

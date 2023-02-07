@@ -38,11 +38,11 @@ module Shumway.Tools.Profiler {
     private _mode: FlameChartOverviewMode;
 
     constructor(controller: Controller, mode: FlameChartOverviewMode = FlameChartOverviewMode.STACK) {
+      super(controller);
       this._mode = mode;
       this._overviewCanvasDirty = true;
       this._overviewCanvas = document.createElement("canvas");
       this._overviewContext = this._overviewCanvas.getContext("2d");
-      super(controller);
     }
 
     setSize(width: number, height?: number) {

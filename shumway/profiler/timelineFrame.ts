@@ -199,7 +199,12 @@ module Shumway.Tools.Profiler {
      * More often than not we don't have to start at the very top.
      */
     public queryNext(time: number): TimelineFrame {
-      var frame = this;
+      var frame;
+        if (this.parent) {
+          frame = frame.parent;
+        } else {
+          return this.query(time);
+        }
       while (time > frame.endTime) {
         if (frame.parent) {
           frame = frame.parent;
@@ -215,7 +220,10 @@ module Shumway.Tools.Profiler {
      */
     public getDepth(): number {
       var depth = 0;
-      var self = this;
+      var self = this.parent;
+      if(this){
+        depth ++;
+      }
       while (self) {
         depth ++;
         self = self.parent;
