@@ -1,5 +1,7 @@
 # PluotSorbet
 
+j2me in your browser
+
 ## Goal of the fork
 
 * [X] make it compile
@@ -7,7 +9,7 @@
 * [ ] add softkey support
 * [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
 
-(original readme below)
+
 
 ## Dependencies
 
@@ -38,6 +40,9 @@ Debian :
 
         python2 tests/httpServer.py
         xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
+
+
+(original readme below)
 
 # PluotSorbet [![Build Status](https://travis-ci.org/mozilla/pluotsorbet.svg)](https://travis-ci.org/mozilla/pluotsorbet)
 
