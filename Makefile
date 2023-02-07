@@ -159,7 +159,7 @@ OLD_CHECKSUM := "$(shell [ -f .checksum ] && cat .checksum)"
 $(shell [ $(CHECKSUM) != $(OLD_CHECKSUM) ] && echo $(CHECKSUM) > .checksum)
 
 toBool = $(if $(findstring 1,$(1)),true,false)
-PREPROCESS = python tools/preprocess-1.1.0/lib/preprocess.py -s \
+PREPROCESS = python2 tools/preprocess-1.1.0/lib/preprocess.py -s \
              -D RELEASE=$(call toBool,$(RELEASE)) \
              -D PROFILE=$(PROFILE) \
              -D PROFILE_FORMAT=$(PROFILE_FORMAT) \
@@ -266,7 +266,10 @@ build_tools/soot-trunk.jar: build_tools/.soot_version
 
 build_tools/closure.jar: build_tools/.closure_compiler_version
 	rm -f build_tools/closure.jar
-	wget -P build_tools https://github.com/mykmelez/closure-compiler/releases/download/$(CLOSURE_COMPILER_VERSION)/closure.jar
+	# NOTE : dead link :(, a replacement is now included
+	# built from https://github.com/google/closure-compiler/tree/maven-v20150901
+	# wget -P build_tools https://github.com/mykmelez/closure-compiler/releases/download/$(CLOSURE_COMPILER_VERSION)/closure.jar
+	cp tools/closure.jar build_tools/closure.jar
 	touch build_tools/closure.jar
 
 JS=build_tools/spidermonkey/js
