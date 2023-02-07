@@ -1,3 +1,37 @@
+# PluotSorbet
+
+(original readme below)
+
+## Dependencies
+
+* Spidermonkey (js102 on arch, libmozjs-102-dev on debian)
+* Typescript
+* Python 2
+
+Arch :
+
+        #replace 102 with 91 or 78 if it doesnt work
+        pacman -S js102
+        ln -s /usr/bin/js102 /usr/local/bin/js
+        
+Debian :
+
+        #replace 102 with 91 or 78 if it doesnt work
+        apt install libmozjs-102-dev
+        ln -s /usr/bin/js102 /usr/local/bin/js
+
+## Install 
+        
+        npm install typescript
+        git clone https://github.com/calculatortamer/pluotsorbet
+        cd pluotsorbet
+        make
+        
+## Using it
+
+        python2 tests/httpServer.py
+        xdg-open http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1
+
 # PluotSorbet [![Build Status](https://travis-ci.org/mozilla/pluotsorbet.svg)](https://travis-ci.org/mozilla/pluotsorbet)
 
 PluotSorbet is a J2ME-compatible virtual machine written in JavaScript<sup>[[1]](#user-content-JavaScript)</sup>. The goal of PluotSorbet is to run MIDlets in web apps without a native plugin.
