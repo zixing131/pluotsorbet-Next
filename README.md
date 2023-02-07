@@ -1,5 +1,12 @@
 # PluotSorbet
 
+## Goal of the fork
+
+* [X] make it compile
+* [ ] convert scripts to python 3
+* [ ] add softkey support
+* [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
+
 (original readme below)
 
 ## Dependencies
@@ -30,7 +37,7 @@ Debian :
 ## Using it
 
         python2 tests/httpServer.py
-        xdg-open http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1
+        xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
 
 # PluotSorbet [![Build Status](https://travis-ci.org/mozilla/pluotsorbet.svg)](https://travis-ci.org/mozilla/pluotsorbet)
 
