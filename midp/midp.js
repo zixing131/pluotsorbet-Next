@@ -1019,6 +1019,7 @@ var MIDP = (function() {
     return systemKeyMap[key] || 0;
   };
 
+  /* original keymap
   var keyMap = {
     1: 119, // UP
     2: 97, // LEFT
@@ -1029,7 +1030,33 @@ var MIDP = (function() {
     10: 101, // GAME_B
     11: 122, // GAME_C
     12: 99, // GAME_D
+  };*/
+  // keyboard focused keymap
+  // note : 7,8,9 are replaced with 1,2,3 since numpads are different from keyboards and phones
+  var keyMap = {
+    1: 38, // UP (arrow)
+    2: 37, // LEFT (arrow)
+    5: 39, // RIGHT (arrow)
+    6: 40, // DOWN (arrow)
+    8: 32, // FIRE (space)
+    9: 65, // GAME_A (q/a)
+    10: 90, // GAME_B (w/z)
+    11: 69, // GAME_C (e)
+    12: 82, // GAME_D (r)
+    42: 106, // KEY_STAR (NUM star)
+    35: 109, // KEY_POUND (NUM minus)
+    48: 96, // KEY_0 (NUM 0)
+    49: 103, // KEY_1 (NUM 7, see note above)
+    50: 104, // KEY_2 (NUM 8, see note above)
+    51: 105, // KEY_3 (NUM 9, see note above)
+    52: 100, // KEY_4 (NUM 4)
+    53: 101, // KEY_5 (NUM 5)
+    54: 102, // KEY_6 (NUM 6)
+    55: 97,  // KEY_7 (NUM 1, see note above)
+    56: 98,  // KEY_8 (NUM 2, see note above)
+    57: 99,  // KEY_9 (NUM 3, see note above)
   };
+
 
   Native["javax/microedition/lcdui/KeyConverter.getKeyCode.(I)I"] = function(key) {
     return keyMap[key] || 0;
