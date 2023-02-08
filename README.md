@@ -5,8 +5,8 @@ j2me in your browser
 ## Goal of the fork
 
 * [X] make it compile
-* [ ] convert scripts to python 3
 * [ ] add softkey support
+* [X] add more resolutions
 * [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
 
 ## Dependencies
@@ -36,9 +36,8 @@ Debian :
         
 ## Using it
 
-        python2 tests/httpServer.py
+        python2 tests/httpServer.py &
         xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
-
 
 (original readme below)
 
