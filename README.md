@@ -38,6 +38,24 @@ Debian :
 
         python2 tests/httpServer.py &
         xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
+        
+## Controls (so far)
+
+they dont make any sense
+
+* *No numkey* (what???)
+* *No softkeys* (why, mozilla, why????)
+* Left = NUM1
+* Right = NUM4
+* Up = F8
+* Down = F4
+* Fire = Space
+* Game A = F2
+* Game B = NUM5
+* Game C = F11
+* Game D = NUM3
+
+
 
 (original readme below)
 
