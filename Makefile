@@ -275,11 +275,12 @@ build_tools/closure.jar: build_tools/.closure_compiler_version
 JS=build_tools/spidermonkey/js
 
 $(JS): build_tools/.spidermonkey_version
-	rm -rf build_tools/spidermonkey build_tools/jsshell*
-	wget -P build_tools -N https://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/$(SPIDERMONKEY_VERSION)-candidates/build1/jsshell-$(PLATFORM).zip
-	unzip -o -d build_tools/spidermonkey build_tools/jsshell-$(PLATFORM).zip
-	chmod +x build_tools/spidermonkey/*
-	touch $(JS)
+	# NOTE : dead link
+	#rm -rf build_tools/spidermonkey build_tools/jsshell*
+	#wget -P build_tools -N https://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/$(SPIDERMONKEY_VERSION)-candidates/build1/jsshell-$(PLATFORM).zip
+	#unzip -o -d build_tools/spidermonkey build_tools/jsshell-$(PLATFORM).zip
+	#chmod +x build_tools/spidermonkey/*
+	#touch $(JS)
 
 $(PREPROCESS_DESTS): $(PREPROCESS_SRCS) .checksum
 	$(foreach file,$(PREPROCESS_SRCS),$(PREPROCESS) -o $(file:.in=) $(file);)
@@ -289,6 +290,7 @@ jasmin:
 
 relooper:
 	make -C jit/relooper/
+
 
 bld/j2me.js: $(BASIC_SRCS) $(JIT_SRCS) build_tools/closure.jar .checksum
 	@echo "Building J2ME"
@@ -319,16 +321,16 @@ aot: bld/classes.jar.js
 bld/classes.jar.js: java/classes.jar bld/jsc.js aot-methods.txt build_tools/closure.jar $(JS) .checksum
 	@echo "Compiling ..."
 	js bld/jsc.js -cp java/classes.jar -d -jf java/classes.jar -mff aot-methods.txt > bld/classes.jar.js
-ifeq ($(RELEASE),1)
+#ifeq ($(RELEASE),1)
 	java -jar build_tools/closure.jar --warning_level $(CLOSURE_WARNING_LEVEL) --language_in ECMASCRIPT5 -O SIMPLE bld/classes.jar.js > bld/classes.jar.cc.js \
 		&& mv bld/classes.jar.cc.js bld/classes.jar.js
-endif
+#endif
 
 bld/tests.jar.js: tests/tests.jar bld/jsc.js $(JS) aot-methods.txt
-	js bld/jsc.js -cp java/classes.jar tests/tests.jar -d -jf tests/tests.jar -mff aot-methods.txt > bld/tests.jar.js
+	java -jar build_tools/closure.jar --warning_level $(CLOSURE_WARNING_LEVEL) --language_in ECMASCRIPT5 -O SIMPLE bld/jsc.js -cp java/classes.jar tests/tests.jar -d -jf tests/tests.jar -mff aot-methods.txt > bld/tests.jar.js
 
 bld/program.jar.js: program.jar bld/jsc.js $(JS) aot-methods.txt
-	js bld/jsc.js -cp java/classes.jar program.jar -d -jf program.jar -mff aot-methods.txt > bld/program.jar.js
+	java -jar build_tools/closure.jar --warning_level $(CLOSURE_WARNING_LEVEL) --language_in ECMASCRIPT5 -O SIMPLE bld/jsc.js -cp java/classes.jar program.jar -d -jf program.jar -mff aot-methods.txt > bld/program.jar.js
 
 shumway: bld/shumway.js
 bld/shumway.js: $(SHUMWAY_SRCS)
