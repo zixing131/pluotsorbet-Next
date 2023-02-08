@@ -238,11 +238,18 @@
         <button id="sampleCounters1">One sample for 1s</button>
         <button id="sampleCounters2">One sample for 100ms (2s)</button>
         <select id="canvasSize">
+          <option value="custom">FULLSCREEN</option>
+          <option value="custom">CUSTOM</option>
+          <option value="128x160">Display size: 128x160</option>
+          <option value="176x220">Display size: 176x220</option>
+          <option value="208x208">Display size: 208x208</option>
           <option value="240x320" selected>Display size: 240x320</option>
           <option value="320x240">Display size: 320x240</option>
           <option value="320x480">Display size: 320x480</option>
           <option value="480x320">Display size: 480x320</option>
         </select>
+        <input type="number" id="custom_display_width" placeholder="Custom width">
+        <input type="number" id="custom_display_height" placeholder="Custom height">
         <button id="start">Start</button>
 
       </section>

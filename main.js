@@ -268,9 +268,14 @@ document.getElementById("start").onclick = function() {
 
 document.getElementById("canvasSize").onchange = function() {
   let root = document.querySelector(':root');
-  let size = this.value.split("x");
-  root.style.setProperty('--display_width', size[0]+"px");
-  root.style.setProperty('--display_height', size[1]+"px");
+  if(this.value=="custom"){
+    root.style.setProperty('--display_width', document.getElementById("custom_display_width").value+"px");
+    root.style.setProperty('--display_height', document.getElementById("custom_display_height").value+"px");
+  } else {
+    let size = this.value.split("x");
+    root.style.setProperty('--display_width', size[0]+"px");
+    root.style.setProperty('--display_height', size[1]+"px");
+  }
 
   MIDP.updatePhysicalScreenSize();
   MIDP.updateCanvas();
