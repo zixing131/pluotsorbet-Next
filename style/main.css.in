@@ -1,3 +1,8 @@
+:root {
+  --display_width: 240px;
+  --display_height: 320px;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -17,7 +22,7 @@ body {
 #display-container {
   position: relative;
   float: right;
-  width: 240px;
+  width: auto;
   height: 100%;
 }
 
@@ -26,13 +31,24 @@ body {
   top: 0px;
   right: 0px;
   border-bottom: 1px solid #ababab;
-  width: 100%;
+  width: 240px;
   height: 320px;
   z-index: 1;
   background: black;
 }
 
+/* custom display size */
+
+.size-var #display-container {
+  width: var(--display_width) !important;
+}
+.size-var #display {
+  height: var(--display_height) !important;
+}
+
+
 /* Set the display size. */
+/* deprecated in favor of size-var
 .size-320x240 #display-container {
   width: 320px !important;
 }
@@ -81,6 +97,8 @@ body {
 .size-480x320 #settings {
   height: calc(100% - 320px) !important;
 }
+*/
+
 /* Float the back button to the bottom right corner */
 #back-button {
   position: absolute;
@@ -111,7 +129,7 @@ button {
   box-sizing: border-box;
   right: 1px;
   width: 100%;
-  height: calc(100% - 320px);
+  height: calc(100% - var(--display_height));
   border-left: 1px solid #ababab;
   overflow-y: auto;
 }
@@ -333,7 +351,7 @@ form[role="dialog"][data-type="confirm"].lcdui-alert section {
   background-color: #333333;
   top: 0;
   left: 0;
-  width: calc(100% - 240px);
+  width: calc(100% - var(--display_width));
   height: 100%;
   float: left;
   overflow: hidden;

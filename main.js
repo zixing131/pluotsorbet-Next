@@ -267,15 +267,10 @@ document.getElementById("start").onclick = function() {
 };
 
 document.getElementById("canvasSize").onchange = function() {
-  Array.prototype.forEach.call(document.body.classList, function(c) {
-    if (c.indexOf('size-') == 0) {
-      document.body.classList.remove(c);
-    }
-  });
-
-  if (this.value) {
-    document.body.classList.add(this.value);
-  }
+  let root = document.querySelector(':root');
+  let size = this.value.split("x");
+  root.style.setProperty('--display_width', size[0]+"px");
+  root.style.setProperty('--display_height', size[1]+"px");
 
   MIDP.updatePhysicalScreenSize();
   MIDP.updateCanvas();
