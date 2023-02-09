@@ -44,6 +44,7 @@ body {
 }
 .size-var #display {
   height: var(--display_height) !important;
+  width: var(--display_width) !important;
 }
 
 
