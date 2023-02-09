@@ -5,7 +5,7 @@ j2me in your browser
 ## Goal of the fork
 
 * [X] make it compile
-* [ ] add softkey support
+* [X] add softkey support
 * [X] add more resolutions
 * [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
 
@@ -41,21 +41,12 @@ Debian :
         
 ## Controls (so far)
 
-they dont make any sense
-
-* *No numkey* (what???)
-* *No softkeys* (why, mozilla, why????)
-* Left = NUM1
-* Right = NUM4
-* Up = F8
-* Down = F4
-* Fire = Space
-* Game A = F2
-* Game B = NUM5
-* Game C = F11
-* Game D = NUM3
-
-
+* Q, W, E ,R (or A,Z,E,R)       = Game A, B, C, D
+* Z and X (or W and X)          = Left and Right softkeys
+* Arrows                        = Up, Down, Left, Right
+* Numpad                        = Keypad (1,2,3 and 7,8,9 are inverted)
+* Numpad Star (-)               = Star (*)
+* Numpad Minus (*)              = Pound (#)
 
 (original readme below)
 
