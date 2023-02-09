@@ -69,9 +69,10 @@ var util = (function () {
    * multiple string instances.
    */
   function stringToCharArray(str) {
-    let out=new Uint16Array(str.length);
-    for(let i=0; i<str.length; i++){
-      out[i]=str.charCodeAt(i);
+    let length=str.length  
+    let out=new Uint16Array(length);
+    for(let i=0; i<length; i++){
+      out[i]=str.codePointAt(i);
     }
     return out;
   }
