@@ -44,7 +44,7 @@ Debian :
 * Q, W, E ,R (or A,Z,E,R)       = Game A, B, C, D
 * Z and X (or W and X)          = Left and Right softkeys
 * Arrows                        = Up, Down, Left, Right
-* Numpad                        = Keypad (1,2,3 and 7,8,9 are inverted)
+* Numpad                        = Keypad (1,2,3 and 7,8,9 are swapped)
 * Numpad Star (-)               = Star (*)
 * Numpad Minus (*)              = Pound (#)
 
