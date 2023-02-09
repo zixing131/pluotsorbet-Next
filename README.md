@@ -45,8 +45,8 @@ Debian :
 * Z and X (or W and X)          = Left and Right softkeys
 * Arrows                        = Up, Down, Left, Right
 * Numpad                        = Keypad (1,2,3 and 7,8,9 are swapped)
-* Numpad Star (-)               = Star (*)
-* Numpad Minus (*)              = Pound (#)
+* Numpad Star (\*)               = Star (\*)
+* Numpad Minus (-)              = Pound (#)
 
 (original readme below)
 
