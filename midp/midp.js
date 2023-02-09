@@ -892,12 +892,26 @@ var MIDP = (function() {
     }
   };
 
+  //weird quirk : if the key is negative such as SOFT_BUTTON1/2 (-6/-7), it has to be converted using getGameAction()
+  //this needs to be researched further... for now heres a fix
   window.addEventListener("keydown", function(ev) {
-    sendKeyPress(ev.which);
+    let keyCode=ev.which;
+    let gameAction=getAction(keyCode);
+    if(gameAction<0){
+      sendKeyPress(gameAction);
+      return;
+    }
+    sendKeyPress(keyCode);
   });
 
   window.addEventListener("keyup", function(ev) {
-    sendKeyRelease(ev.which);
+    let keyCode=ev.which;
+    let gameAction=getAction(keyCode);
+    if(gameAction<0){
+      sendKeyRelease(gameAction);
+      return;
+    }
+    sendKeyRelease(keyCode);
   });
 
   Native["com/sun/midp/events/EventQueue.getNativeEventQueueHandle.()I"] = function() {
@@ -998,27 +1012,6 @@ var MIDP = (function() {
     return 0;
   };
 
-  /* We don't care about the system keys SELECT,
-     SOFT_BUTTON1, SOFT_BUTTON2, DEBUG_TRACE1, CLAMSHELL_OPEN, CLAMSHELL_CLOSE,
-     but we do care about SYSTEM_KEY_CLEAR, so send it when the delete key is pressed.
-     */
-
-  var SYSTEM_KEY_POWER = 1;
-  var SYSTEM_KEY_SEND = 2;
-  var SYSTEM_KEY_END = 3;
-  var SYSTEM_KEY_CLEAR = 4;
-
-  var systemKeyMap = {
-    8: SYSTEM_KEY_CLEAR, // Backspace
-    112: SYSTEM_KEY_POWER, // F1
-    116: SYSTEM_KEY_SEND, // F5
-    114: SYSTEM_KEY_END, // F3
-  };
-
-  Native["javax/microedition/lcdui/KeyConverter.getSystemKey.(I)I"] = function(key) {
-    return systemKeyMap[key] || 0;
-  };
-
   /* original keymap
   var keyMap = {
     1: 119, // UP
@@ -1033,34 +1026,81 @@ var MIDP = (function() {
   };*/
   // keyboard focused keymap
   // note : 7,8,9 are replaced with 1,2,3 since numpads are different from keyboards and phones
-  var keyMap = {
-    1: 38, // UP (arrow)
-    2: 37, // LEFT (arrow)
-    5: 39, // RIGHT (arrow)
-    6: 40, // DOWN (arrow)
-    8: 32, // FIRE (space)
-    9: 65, // GAME_A (q/a)
-    10: 90, // GAME_B (w/z)
-    11: 69, // GAME_C (e)
-    12: 82, // GAME_D (r)
-    42: 106, // KEY_STAR (NUM star)
-    35: 109, // KEY_POUND (NUM minus)
-    48: 96, // KEY_0 (NUM 0)
-    49: 103, // KEY_1 (NUM 7, see note above)
-    50: 104, // KEY_2 (NUM 8, see note above)
-    51: 105, // KEY_3 (NUM 9, see note above)
-    52: 100, // KEY_4 (NUM 4)
-    53: 101, // KEY_5 (NUM 5)
-    54: 102, // KEY_6 (NUM 6)
-    55: 97,  // KEY_7 (NUM 1, see note above)
-    56: 98,  // KEY_8 (NUM 2, see note above)
-    57: 99,  // KEY_9 (NUM 3, see note above)
+  var keyToAction = {
+    38  :1, // UP (arrow)
+    37  :2, // LEFT (arrow)
+    39  :5, // RIGHT (arrow)
+    40  :6, // DOWN (arrow)
+    32  :8, // FIRE (space)
+    65  :9, // GAME_A (q/a)
+    90  :10, // GAME_B (w/z)
+    69  :11, // GAME_C (e)
+    82  :12, // GAME_D (r)
+    106 :42, // KEY_STAR (NUM star)
+    109 :35, // KEY_POUND (NUM minus)
+    96  :48, // KEY_0 (NUM 0)
+    103 :49, // KEY_1 (NUM 7, see note above)
+    104 :50, // KEY_2 (NUM 8, see note above)
+    105 :51, // KEY_3 (NUM 9, see note above)
+    100 :52, // KEY_4 (NUM 4)
+    101 :53, // KEY_5 (NUM 5)
+    102 :54, // KEY_6 (NUM 6)
+    97  :55,  // KEY_7 (NUM 1, see note above)
+    98  :56,  // KEY_8 (NUM 2, see note above)
+    99  :57,  // KEY_9 (NUM 3, see note above)
+    87  :-6, // softkey 1?
+    88  :-7, // softkey 1?
   };
 
-
-  Native["javax/microedition/lcdui/KeyConverter.getKeyCode.(I)I"] = function(key) {
-    return keyMap[key] || 0;
+  /*
+  var actionToKey = {
+    1  :38, // UP (arrow)
+    2:37, // LEFT (arrow)
+    5:39, // RIGHT (arrow)
+    6:40, // DOWN (arrow)
+    8:32, // FIRE (space)
+    9:65, // GAME_A (q/a)
+    10:90, // GAME_B (w/z)
+    11:69, // GAME_C (e)
+    12:82, // GAME_D (r)
+    42:106, // KEY_STAR (NUM star)
+    35:109, // KEY_POUND (NUM minus)
+    48:96, // KEY_0 (NUM 0)
+    49:103, // KEY_1 (NUM 7, see note above)
+    50:104, // KEY_2 (NUM 8, see note above)
+    51:105, // KEY_3 (NUM 9, see note above)
+    52:100, // KEY_4 (NUM 4)
+    53:101, // KEY_5 (NUM 5)
+    54:102, // KEY_6 (NUM 6)
+    55:97,  // KEY_7 (NUM 1, see note above)
+    56:98,  // KEY_8 (NUM 2, see note above)
+    57:99,  // KEY_9 (NUM 3, see note above)
+    "-6":87, // softkey 1?
+    "-7":88, // softkey 1?
   };
+
+  function getKeyCode(key){
+    return actionToKey[key < 0 ? key.toString() : key] || 0;
+  }
+  
+  Native["javax/microedition/lcdui/KeyConverter.getSystemKey.(I)I"] = getKeyCode;
+
+  Native["javax/microedition/lcdui/KeyConverter.getKeyCode.(I)I"] = getKeyCode;
+
+  */
+  //nothing seems to use getSystemKey or getKeyCode except tests
+
+
+  function getAction(keyCode){
+    let ret=keyToAction[keyCode];
+//    console.log("getAction " + keyCode +"="+(ret || 0));
+  //  console.log(typeof ret);
+    return ret || 0;
+  }
+
+
+  
+  Native["javax/microedition/lcdui/KeyConverter.getGameAction.(I)I"] = getAction;
 
   var keyNames = {
     119: "Up",
@@ -1078,21 +1118,6 @@ var MIDP = (function() {
     return J2ME.newString((keyCode in keyNames) ? keyNames[keyCode] : String.fromCharCode(keyCode));
   };
 
-  var gameKeys = {
-    119: 1,  // UP
-    97: 2,   // LEFT
-    115: 6,  // DOWN
-    100: 5,  // RIGHT
-    32: 8,   // FIRE
-    113: 9,  // GAME_A
-    101: 10, // GAME_B
-    122: 11, // GAME_C
-    99: 12   // GAME_D
-  };
-
-  Native["javax/microedition/lcdui/KeyConverter.getGameAction.(I)I"] = function(keyCode) {
-    return gameKeys[keyCode] || 0;
-  };
 
   Native["javax/microedition/lcdui/game/GameCanvas.setSuppressKeyEvents.(Ljavax/microedition/lcdui/Canvas;Z)V"] = function(canvas, shouldSuppress) {
     suppressKeyEvents = shouldSuppress;
