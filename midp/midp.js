@@ -895,7 +895,7 @@ var MIDP = (function() {
   //weird quirk : if the key is negative such as SOFT_BUTTON1/2 (-6/-7), it has to be converted using getGameAction()
   //this needs to be researched further... for now heres a fix
   window.addEventListener("keydown", function(ev) {
-    let keyCode=ev.which;
+    let keyCode=ev.which || ev.keyCode;
     let gameAction=getAction(keyCode);
     if(gameAction<0){
       sendKeyPress(gameAction);
@@ -905,7 +905,7 @@ var MIDP = (function() {
   });
 
   window.addEventListener("keyup", function(ev) {
-    let keyCode=ev.which;
+    let keyCode=ev.which || ev.keyCode;
     let gameAction=getAction(keyCode);
     if(gameAction<0){
       sendKeyRelease(gameAction);
