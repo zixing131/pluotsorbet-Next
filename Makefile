@@ -251,17 +251,19 @@ build_tools/slimerjs-$(SLIMERJS_VERSION): build_tools/.slimerjs_version
 	touch build_tools/slimerjs-$(SLIMERJS_VERSION)
 
 build_tools/$(XULRUNNER_PATH): build_tools/.xulrunner_version
-	rm -rf build_tools/XUL* build_tools/xul*
-	wget -P build_tools -N https://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/$(XULRUNNER_VERSION)/runtimes/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT)
-ifeq ($(XULRUNNER_EXT),tar.bz2)
-	tar x -C build_tools -f build_tools/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT) -m
-else
-	unzip -o -d build_tools build_tools/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT)
-endif
+	#rm -rf build_tools/XUL* build_tools/xul*
+	#wget -P build_tools -N https://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/$(XULRUNNER_VERSION)/runtimes/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT)
+#ifeq ($(XULRUNNER_EXT),tar.bz2)
+#	tar x -C build_tools -f build_tools/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT) -m
+#else
+#	unzip -o -d build_tools build_tools/xulrunner-$(XULRUNNER_VERSION).en-US.$(PLATFORM).$(XULRUNNER_EXT)
+#endif
 
 build_tools/soot-trunk.jar: build_tools/.soot_version
 	rm -f build_tools/soot-trunk.jar
-	wget -P build_tools https://github.com/marco-c/soot/releases/download/soot-$(SOOT_VERSION)/soot-trunk.jar
+	# link not dead yet but better include it in the project before it dies
+	#wget -P build_tools https://github.com/marco-c/soot/releases/download/soot-$(SOOT_VERSION)/soot-trunk.jar
+	cp tools/soot-trunk.jar build_tools/soot-trunk.jar
 	touch build_tools/soot-trunk.jar
 
 build_tools/closure.jar: build_tools/.closure_compiler_version
