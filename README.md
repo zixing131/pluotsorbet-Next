@@ -1,3 +1,55 @@
+# PluotSorbet
+
+j2me in your browser
+
+## Goal of the fork
+
+* [X] make it compile
+* [X] add softkey support
+* [X] add more resolutions
+* [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
+
+## Dependencies
+
+* Spidermonkey (js102 on arch, libmozjs-102-dev on debian)
+* Typescript
+* Python 2
+
+Arch :
+
+        #replace 102 with 91 or 78 if it doesnt work
+        pacman -S js102
+        ln -s /usr/bin/js102 /usr/local/bin/js
+        
+Debian :
+
+        #replace 102 with 91 or 78 if it doesnt work
+        apt install libmozjs-102-dev
+        ln -s /usr/bin/js102 /usr/local/bin/js
+
+## Install 
+        
+        npm install typescript
+        git clone https://github.com/calculatortamer/pluotsorbet
+        cd pluotsorbet
+        make
+        
+## Using it
+
+        python2 tests/httpServer.py &
+        xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
+        
+## Controls (so far)
+
+* Q, W, E ,R (or A,Z,E,R)       = Game A, B, C, D
+* Z and X (or W and X)          = Left and Right softkeys
+* Arrows                        = Up, Down, Left, Right
+* Numpad                        = Keypad (1,2,3 and 7,8,9 are swapped)
+* Numpad Star (\*)               = Star (\*)
+* Numpad Minus (-)              = Pound (#)
+
+(original readme below)
+
 # PluotSorbet [![Build Status](https://travis-ci.org/mozilla/pluotsorbet.svg)](https://travis-ci.org/mozilla/pluotsorbet)
 
 PluotSorbet is a J2ME-compatible virtual machine written in JavaScript<sup>[[1]](#user-content-JavaScript)</sup>. The goal of PluotSorbet is to run MIDlets in web apps without a native plugin.
