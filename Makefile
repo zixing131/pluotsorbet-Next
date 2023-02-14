@@ -59,7 +59,9 @@ CONTENT_HANDLER_FILTER ?= '["image/*", "video/*", "audio/*"]'
 export CONTENT_HANDLER_FILTER
 
 ifeq ($(PROFILE),0)
-  J2ME_JS_OPTIMIZATION_LEVEL = J2ME_OPTIMIZATIONS
+# J2ME_OPTIMIZATIONS doesnt exist in google's closure compiler, mykmelez's fork of closure compiler is gone
+#  J2ME_JS_OPTIMIZATION_LEVEL = J2ME_OPTIMIZATIONS
+J2ME_JS_OPTIMIZATION_LEVEL = SIMPLE
 else
   # Closure optimization level J2ME_OPTIMIZATIONS breaks the profiler somehow,
   # so we revert to level SIMPLE if the profiler is enabled.
