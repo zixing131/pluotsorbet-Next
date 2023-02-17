@@ -7,7 +7,7 @@ j2me in your browser
 * [X] make it compile
 * [X] add softkey support
 * [X] add more resolutions
-* [ ] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
+* [X] create helper script that generates url (instead of manually reading META-INF/MANIFEST.MF for classes)
 
 ## Dependencies
 
@@ -18,27 +18,39 @@ j2me in your browser
 
 Arch :
 
-        #replace 102 with 91 or 78 if it doesnt work
-        pacman -S js102
-        ln -s /usr/bin/js102 /usr/local/bin/js
+    #replace 102 with 91 or 78 if it doesnt work
+    pacman -S js102 npm
+    ln -s /usr/bin/js102 /usr/local/bin/js
+    npm install -g typescript
         
 Debian :
 
-        #replace 102 with 91 or 78 if it doesnt work
-        apt install libmozjs-102-dev
-        ln -s /usr/bin/js102 /usr/local/bin/js
+    #replace 102 with 91 or 78 if it doesnt work
+    apt install libmozjs-102-dev npm python2
+    ln -s /usr/bin/js102 /usr/local/bin/js
+    npm install -g typescript
 
 ## Install 
-        
-        npm install -g typescript
-        git clone https://github.com/calculatortamer/pluotsorbet
-        cd pluotsorbet
-        make
+    
+    git clone https://github.com/calculatortamer/pluotsorbet
+    cd pluotsorbet
+    make
         
 ## Using it
 
-        python2 tests/httpServer.py &
-        xdg-open "http://localhost:8000/index.html?midletClassName=asteroids.Game&jars=tests/tests.jar&gamepad=1"
+Launch web server
+
+    python2 tests/httpServer.py 2>/dev/null &
+
+Get url to copy to browser
+(note : jar must be inside of the git directory)
+
+    ./get_url.sh $PATH_TO_JAR
+    
+Or directly launch to default browser
+
+    ./launch_jar.sh $PATH_TO_JAR
+
         
 ## Controls (so far)
 
