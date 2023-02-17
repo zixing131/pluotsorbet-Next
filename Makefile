@@ -386,7 +386,7 @@ BENCHMARK_SRCS=$(shell find bench -name "*.java")
 bench/benchmark.jar: $(BENCHMARK_SRCS) java/classes.jar tests/tests.jar
 	rm -rf bench/build
 	mkdir bench/build
-	javac -source 1.3 -target 1.3 -encoding UTF-8 -bootclasspath "java/classes.jar$(BOOTCLASSPATH_SEPARATOR)tests/tests.jar" -extdirs "" -d bench/build $(BENCHMARK_SRCS) > /dev/null
+	javac -source 6 -target 6 -encoding UTF-8 -bootclasspath "java/classes.jar$(BOOTCLASSPATH_SEPARATOR)tests/tests.jar" -extdirs "" -d bench/build $(BENCHMARK_SRCS) > /dev/null
 	cd bench/build && jar cf0 ../benchmark.jar *
 	rm -rf bench/build
 

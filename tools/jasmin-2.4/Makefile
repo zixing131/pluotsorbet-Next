@@ -112,14 +112,14 @@ CUP = src/java_cup/Main.java \
 all: jasmin.jar java_cup.jar
 
 jasmin.jar : $(SRC)
-	mkdir out
-	javac -extdirs "" -source 1.2 -target 1.1 -d out -cp src src/Jasmin.java
+	mkdir -p out
+	javac -extdirs "" -source 6 -target 6 -d out -cp src src/Jasmin.java
 	jar cfm jasmin.jar src/jasmin.mf -C out .
 	rm -rf out
 
 java_cup.jar : $(CUP)
-	mkdir out_cup
-	javac -extdirs "" -source 1.2 -target 1.1 -d out_cup -cp src src/java_cup/Main.java
+	mkdir -p out_cup
+	javac -extdirs "" -source 6 -target 6 -d out_cup -cp src src/java_cup/Main.java
 	jar cfm java_cup.jar src/java_cup.mf -C out_cup .
 	rm -rf out_cup
 
