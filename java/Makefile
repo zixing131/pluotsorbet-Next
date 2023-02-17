@@ -1,3 +1,5 @@
+JAVA_VER ?= 1.3
+
 SRC_DIRS=cldc1.1.1 vm midp custom
 JPP_DEFS=-DENABLE_JSR_205 -DENABLE_SSL -DENABLE_PUBLICKEYSTORE -DENABLE_JSR_211 -DENABLE_MULTIPLE_ISOLATES -DRECORD -DUSE_FILE_CONNECTION -DENABLE_JSR_234
 
@@ -25,7 +27,7 @@ classes.jar: $(SRCS) $(JPP_DESTS) $(EXTRA)
 	mkdir build build-src
 	$(foreach dir,$(SRC_DIRS),cp -a $(dir)/. build-src/;)
 	find ./build-src -name *.java > build-srcs.txt
-	javac -cp build-src -g:none -source 1.3 -target 1.3 -bootclasspath "" -extdirs "" -d ./build @build-srcs.txt > /dev/null
+	javac -cp build-src -g:none -source $(JAVA_VER) -target $(JAVA_VER) -bootclasspath "" -extdirs "" -d ./build @build-srcs.txt > /dev/null
 	rm -rf build-src
 	# TODO: Re-enable Soot optimizations once tests with baseline JIT enabled
 	#       for all methods pass.

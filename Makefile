@@ -7,6 +7,8 @@ PROFILE ?= 0
 PROFILE_FORMAT ?= PLAIN
 BENCHMARK ?= 0
 CONSOLE ?= 1
+JAVA_VER ?= 6
+TESTS ?= 1
 
 # The directory into which the *app* target should copy the files.
 PACKAGE_DIR ?= output
@@ -290,7 +292,7 @@ $(PREPROCESS_DESTS): $(PREPROCESS_SRCS) .checksum
 	$(foreach file,$(PREPROCESS_SRCS),$(PREPROCESS) -o $(file:.in=) $(file);)
 
 jasmin:
-	make -C tools/jasmin-2.4
+	make -C tools/jasmin-2.4 JAVA_VER=$(JAVA_VER)
 
 relooper:
 	make -C jit/relooper/
@@ -347,14 +349,16 @@ config-build: config/build.js.in
 
 tests/tests.jar: tests
 tests: java jasmin
-	make -C tests
+ifeq ($(TESTS),1)
+	make -C tests JAVA_VER=$(JAVA_VER)
+endif
 
 LANG_FILES=$(shell find l10n -name "*.xml")
 LANG_DESTS=$(LANG_FILES:%.xml=java/%.json) java/custom/com/sun/midp/i18n/ResourceConstants.java java/custom/com/sun/midp/l10n/LocalizedStringsBase.java
 
 java/classes.jar: java
 java: $(LANG_DESTS) build_tools/soot-trunk.jar
-	make -C java
+	make -C java JAVA_VER=$(JAVA_VER)
 
 $(LANG_DESTS): $(LANG_FILES)
 	rm -rf java/l10n/
@@ -384,11 +388,13 @@ package: app
 BENCHMARK_SRCS=$(shell find bench -name "*.java")
 
 bench/benchmark.jar: $(BENCHMARK_SRCS) java/classes.jar tests/tests.jar
+ifeq ($(TESTS),1)
 	rm -rf bench/build
 	mkdir bench/build
-	javac -source 1.3 -target 1.3 -encoding UTF-8 -bootclasspath "java/classes.jar$(BOOTCLASSPATH_SEPARATOR)tests/tests.jar" -extdirs "" -d bench/build $(BENCHMARK_SRCS) > /dev/null
+	javac -source $(JAVA_VER) -target $(JAVA_VER) -encoding UTF-8 -bootclasspath "java/classes.jar$(BOOTCLASSPATH_SEPARATOR)tests/tests.jar" -extdirs "" -d bench/build $(BENCHMARK_SRCS) > /dev/null
 	cd bench/build && jar cf0 ../benchmark.jar *
 	rm -rf bench/build
+endif
 
 clean:
 	rm -rf bld $(PACKAGE_DIR)
