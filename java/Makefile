@@ -27,7 +27,7 @@ classes.jar: $(SRCS) $(JPP_DESTS) $(EXTRA)
 	mkdir build build-src
 	$(foreach dir,$(SRC_DIRS),cp -a $(dir)/. build-src/;)
 	find ./build-src -name *.java > build-srcs.txt
-	javac -cp build-src -g:none -source 6 -target 6 -bootclasspath "" -extdirs "" -d ./build @build-srcs.txt > /dev/null
+	javac -cp build-src -g:none -source $(JAVA_VER) -target $(JAVA_VER) -bootclasspath "" -extdirs "" -d ./build @build-srcs.txt > /dev/null
 	rm -rf build-src
 	# TODO: Re-enable Soot optimizations once tests with baseline JIT enabled
 	#       for all methods pass.
