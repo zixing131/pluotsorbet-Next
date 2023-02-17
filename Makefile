@@ -8,6 +8,7 @@ PROFILE_FORMAT ?= PLAIN
 BENCHMARK ?= 0
 CONSOLE ?= 1
 JAVA_VER ?= 6
+TESTS ?= 1
 
 # The directory into which the *app* target should copy the files.
 PACKAGE_DIR ?= output
@@ -348,7 +349,9 @@ config-build: config/build.js.in
 
 tests/tests.jar: tests
 tests: java jasmin
+ifeq ($(TESTS),1)
 	make -C tests JAVA_VER=$(JAVA_VER)
+endif
 
 LANG_FILES=$(shell find l10n -name "*.xml")
 LANG_DESTS=$(LANG_FILES:%.xml=java/%.json) java/custom/com/sun/midp/i18n/ResourceConstants.java java/custom/com/sun/midp/l10n/LocalizedStringsBase.java
@@ -385,11 +388,13 @@ package: app
 BENCHMARK_SRCS=$(shell find bench -name "*.java")
 
 bench/benchmark.jar: $(BENCHMARK_SRCS) java/classes.jar tests/tests.jar
+ifeq ($(TESTS),1)
 	rm -rf bench/build
 	mkdir bench/build
 	javac -source $(JAVA_VER) -target $(JAVA_VER) -encoding UTF-8 -bootclasspath "java/classes.jar$(BOOTCLASSPATH_SEPARATOR)tests/tests.jar" -extdirs "" -d bench/build $(BENCHMARK_SRCS) > /dev/null
 	cd bench/build && jar cf0 ../benchmark.jar *
 	rm -rf bench/build
+endif
 
 clean:
 	rm -rf bld $(PACKAGE_DIR)
