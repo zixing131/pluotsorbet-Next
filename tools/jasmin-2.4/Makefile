@@ -1,3 +1,5 @@
+JAVA_VER ?= 6
+
 .PHONY: clean
 
 SRC = src/Jasmin.java \
@@ -113,13 +115,13 @@ all: jasmin.jar java_cup.jar
 
 jasmin.jar : $(SRC)
 	mkdir -p out
-	javac -extdirs "" -source 6 -target 6 -d out -cp src src/Jasmin.java
+	javac -extdirs "" -source $(JAVA_VER) -target $(JAVA_VER) -d out -cp src src/Jasmin.java
 	jar cfm jasmin.jar src/jasmin.mf -C out .
 	rm -rf out
 
 java_cup.jar : $(CUP)
 	mkdir -p out_cup
-	javac -extdirs "" -source 6 -target 6 -d out_cup -cp src src/java_cup/Main.java
+	javac -extdirs "" -source $(JAVA_VER) -target $(JAVA_VER) -d out_cup -cp src src/java_cup/Main.java
 	jar cfm java_cup.jar src/java_cup.mf -C out_cup .
 	rm -rf out_cup
 

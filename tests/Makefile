@@ -1,3 +1,5 @@
+JAVA_VER ?= 6
+
 EXCLUDED="./support/*"
 
 ifeq ($(JSR_256),0)
@@ -67,9 +69,9 @@ tests.jar: $(SRCS) $(JASMIN_SRCS) Testlets.java MIDletTestlets.java
 	rm -rf build
 	mkdir build
 	# Build the buildtime support classes in-place, not in ./build, so they aren't available at runtime.
-	javac -source 6 -target 6 -encoding UTF-8 -bootclasspath ../java/classes.jar -extdirs "" $(BUILDTIME_SUPPORT_SRCS) > /dev/null
-	javac -source 6 -target 6 -encoding UTF-8 -bootclasspath ../java/classes.jar -cp $(BUILDTIME_SUPPORT_DIR) -extdirs "" -d ./build $(SRCS) > /dev/null
-	javac -source 6 -target 6 -encoding UTF-8 -bootclasspath ../java/classes.jar -extdirs "" -d ./build $(RUNTIME_SUPPORT_SRCS) > /dev/null
+	javac -source $(JAVA_VER) -target $(JAVA_VER) -encoding UTF-8 -bootclasspath ../java/classes.jar -extdirs "" $(BUILDTIME_SUPPORT_SRCS) > /dev/null
+	javac -source $(JAVA_VER) -target $(JAVA_VER) -encoding UTF-8 -bootclasspath ../java/classes.jar -cp $(BUILDTIME_SUPPORT_DIR) -extdirs "" -d ./build $(SRCS) > /dev/null
+	javac -source $(JAVA_VER) -target $(JAVA_VER) -encoding UTF-8 -bootclasspath ../java/classes.jar -extdirs "" -d ./build $(RUNTIME_SUPPORT_SRCS) > /dev/null
 	java -jar ../tools/jasmin-2.4/jasmin.jar -d build/ $(JASMIN_SRCS)
 	jar cfe tests.jar RunTests -C build/ .
 	jar uf $(PACKAGE_FILES) > /dev/null
