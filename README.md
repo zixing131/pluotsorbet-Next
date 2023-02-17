@@ -14,7 +14,7 @@ j2me in your browser
 * Spidermonkey (js102 on arch, libmozjs-102-dev on debian)
 * Typescript
 * Python 2
-* Java 8 or 11 JDK (both work now!) (Java 17+ does not work since source/target 6 is no longer supported)
+* Java JDK 8, 11 or 17 (see notice for JDK 17 in Building section)
 
 Arch :
 
@@ -31,11 +31,14 @@ Debian :
     ln -s /usr/bin/js102 /usr/local/bin/js
     npm install -g typescript
 
-## Install 
+## Building 
     
     git clone https://github.com/calculatortamer/pluotsorbet
     cd pluotsorbet
     make
+    
+    # Notice for JDK 17 users : use this instead
+    make JAVA_VER=8 TESTS=0
         
 ## Using it
 
