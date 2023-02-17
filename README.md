@@ -14,19 +14,20 @@ j2me in your browser
 * Spidermonkey (js102 on arch, libmozjs-102-dev on debian)
 * Typescript
 * Python 2
-* Java 8 JDK (Java 11+ does not work since source/target 1.3 is no longer supported)
+* Java 8 or 11 JDK (both work now!) (Java 17+ does not work since source/target 6 is no longer supported)
 
 Arch :
 
     #replace 102 with 91 or 78 if it doesnt work
-    pacman -S js102 npm
+    #get python 2 from AUR
+    pacman -S js102 npm jdk11-openjdk
     ln -s /usr/bin/js102 /usr/local/bin/js
     npm install -g typescript
         
 Debian :
 
     #replace 102 with 91 or 78 if it doesnt work
-    apt install libmozjs-102-dev npm python2
+    apt install libmozjs-102-dev npm python2 openjdk-11-jdk
     ln -s /usr/bin/js102 /usr/local/bin/js
     npm install -g typescript
 
