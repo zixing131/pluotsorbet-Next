@@ -88,7 +88,7 @@ import com.sun.cldchi.jvm.JVM;
  * @since   JDK1.0, CLDC 1.0
  */
  
-public final class StringBuffer {
+public class StringBuffer {
 
     /**
      * The value is used for character storage.
