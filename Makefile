@@ -355,7 +355,7 @@ LANG_DESTS=$(LANG_FILES:%.xml=java/%.json) java/custom/com/sun/midp/i18n/Resourc
 
 java/classes.jar: java
 java: $(LANG_DESTS) build_tools/soot-trunk.jar
-	make -C java
+	make -C java JAVA_VER=$(JAVA_VER)
 
 $(LANG_DESTS): $(LANG_FILES)
 	rm -rf java/l10n/

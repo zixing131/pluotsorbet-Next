@@ -1,4 +1,4 @@
-JAVA_VER ?= 6
+JAVA_VER ?= 1.3
 
 .PHONY: clean
 
