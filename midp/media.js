@@ -3,6 +3,11 @@
 
 'use strict';
 
+//1是pAudio
+//2是webaudio-tinysynth
+//3是Audio标签
+var midimode=2;
+
 var Media = {};
 
 Media.ContentTypes = {

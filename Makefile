@@ -117,6 +117,7 @@ MAIN_JS_SRCS = \
   libs/contact2vcard.js \
   libs/emoji.js \
   libs/FileSaver/FileSaver.js \
+  libs/webaudio-tinysynth.js \
   midp/midp.js \
   midp/frameanimator.js \
   midp/fs.js \
@@ -150,6 +151,8 @@ endif
 ifeq ($(CONSOLE),1)
 	MAIN_JS_SRCS += libs/console.js
 endif
+
+MAIN_JS_SRCS += keymap.js
 
 # Add main.js last, as it depends on some of the other scripts.
 MAIN_JS_SRCS += main.js

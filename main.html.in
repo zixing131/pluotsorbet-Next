@@ -83,6 +83,7 @@
     <pre id="raw-console" style="display: none"></pre>
   <!-- #endif -->
 
+  <input id="File" type="file" style="visibility: hidden;display:none;"/>
   <div id="display-container">
     <div id="display">
       <section id="sidebar" data-type="sidebar" style="display:none">
